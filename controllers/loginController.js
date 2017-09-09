@@ -32,7 +32,7 @@ router.get('/send_to_spotify_for_login', function(req, res) {
 	  response_type: 'code',
 	  client_id: "a8e34050570947dfb788ed4bfd87616d",
 	  scope: scope,
-	  redirect_uri: 'http://45.55.156.114:3000/login/spotify_redirect',
+	  redirect_uri: 'http://localhost:3000/login/spotify_redirect',
 	  state: state
 	}));
 });
@@ -40,13 +40,13 @@ router.get('/send_to_spotify_for_login', function(req, res) {
 router.get('/spotify_redirect', function(req, res) {
 	console.log("/spotify_redirect");
 	if (!req.error && req.query.code) {
-		res.redirect("http://45.55.156.114:3000/login/get_spotify_access_token?" +
+		res.redirect("http://localhost:3000/login/get_spotify_access_token?" +
 			querystring.stringify({
         	code: req.query.code
 		}));
 	}
 	else {
-		res.redirect("exp://45.55.156.114:19000" +
+		res.redirect("http://localhost:3001" +
 			querystring.stringify({
         	error: 'login failed'
 		}));
@@ -60,7 +60,7 @@ router.get("/get_spotify_access_token", function(req, res) {
       url: 'https://accounts.spotify.com/api/token',
       form: {
         code: code,
-        redirect_uri: 'http://45.55.156.114:3000/login/spotify_redirect',
+        redirect_uri: 'http://localhost:3000/login/spotify_redirect',
         grant_type: 'authorization_code'
       },
       headers: {
@@ -73,7 +73,7 @@ router.get("/get_spotify_access_token", function(req, res) {
  		if (!error && response.statusCode === 200) {
  			var access_token = body.access_token;
  			var refresh_token = body.refresh_token;
- 			let url = 'http://45.55.156.114:3001?' + querystring.stringify({
+ 			let url = 'http://localhost:3001?' + querystring.stringify({
 	            access_token: access_token,
 				refresh_token: refresh_token
 	        });
@@ -82,7 +82,7 @@ router.get("/get_spotify_access_token", function(req, res) {
 		}
 		else {
 			console.log(error);
-			res.redirect("exp://45.55.156.114:19000?" +
+			res.redirect("http://localhost:3001" +
 				querystring.stringify({
             	error: 'invalid_token'
 			}));

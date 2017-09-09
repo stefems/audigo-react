@@ -15,7 +15,7 @@ class App extends Component {
           <div> 
             <Link to="/">Home</Link>
             {' '}
-            <a href="http://45.55.156.114:3000/login/send_to_spotify_for_login">Login</a>
+            <a href="http://localhost:3000/login/send_to_spotify_for_login">Login</a>
             <Switch>
               <Route exact path="/" component={Home}/>
               <Route exact path="/listen" component={Listen} />
